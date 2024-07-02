@@ -6,7 +6,7 @@ import axios from 'axios';
 const Test = () => {
 
     useEffect(() => {
-        axios.get('http://localhost:8080/test')
+        axios.get('http://rlatkdalbtest1-1182715068.ap-northeast-2.elb.amazonaws.com/test')
             .then(res => {
                 console.log(res.data);
             })
