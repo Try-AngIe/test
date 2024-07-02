@@ -3,14 +3,11 @@ name: FE CD
 on:
   push:
     branches:
-      - main #prod브랜치만
+      - main # prod 브랜치만
 
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: rlatkdbuckettest1
-
-permissions:
-  contents: read
 
 jobs:
   build:
@@ -22,40 +19,33 @@ jobs:
 
       # 캐시 액션 설치
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('react/package-lock.json') }}
       
-      # 캐싱 여부 출력
-      - if: steps.npm-cache.outputs.cache-hit == 'true'
-        run: echo 'npm cache hit!'
-      - if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: echo 'npm cache missed!'
+      # 캐시 여부 출력
+      - name: Print cache status
+        run: |
+          if [ -e ~/.npm ]; then
+            echo "npm cache hit!"
+          else
+            echo "npm cache missed!"
+          fi
 
       # 캐시가 없거나 다른 경우에만 모듈 설치 -> 배포 시간 단축
       - name: Install Dependencies
-        working-directory: react
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
+        working-directory: react
 
       - name: Build Npm
+        run: vite build
         working-directory: react
-        run: npm run build
-
-      # Build 디렉토리 확인 후 AWS S3로 업로드
-      - name: Check build directory
-        run: ls -l react/build
       
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Upload to S3
-        run: aws s3 sync react/build/ s3://${{ env.S3_BUCKET_NAME }} --acl public-read
+        run: |
+          aws s3 sync react/dist/ s3://${{ env.S3_BUCKET_NAME }} --delete --acl public-read
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
