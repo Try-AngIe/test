@@ -43,9 +43,10 @@ jobs:
         working-directory: react
         run: npm run build
 
-      - name: Remove template files
-        run: rm -rf node_modules public src index.html package*
-
+      # Build 디렉토리 확인 후 AWS S3로 업로드
+      - name: Check build directory
+        run: ls -l react/build
+      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -53,7 +54,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: upload to S3
+      - name: Upload to S3
         run: aws s3 sync react/build/ s3://${{ env.S3_BUCKET_NAME }} --acl public-read
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
