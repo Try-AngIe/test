@@ -1,19 +1,11 @@
 spring:
-  application:
-    name: demo
   datasource:
-    url: jdbc:mysql://rlatkdrdstest1.crl3ndtkq6u4.ap-northeast-2.rds.amazonaws.com:3306/rlatkdrdstest1
+    url: jdbc:mysql://rlatkdrdstest1.crl3ndtkq6u4.ap-northeast-2.rds.amazonaws.com:3306/test
     username: admin
     password: kosa1004
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
-      show-sql: true
-    properties:
-      jakarta:
-        persistence:
-          jdbc:
-            url: jdbc:mysql://rlatkdrdstest1.crl3ndtkq6u4.ap-northeast-2.rds.amazonaws.com:3306/rlatkdrdstest1
-        hibernate:
-          dialect: org.hibernate.dialect.MySQL57Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
