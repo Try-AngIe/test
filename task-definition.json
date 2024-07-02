@@ -15,28 +15,7 @@
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "DB_HOST",
-                    "value": "rlatkdrdstest1.crl3ndtkq6u4.ap-northeast-2.rds.amazonaws.com"
-                },
-                {
-                    "name": "DB_PORT",
-                    "value": "3306"
-                },
-                {
-                    "name": "DB_NAME",
-                    "value": "rlatkdrdstest1"
-                },
-                {
-                    "name": "DB_USER",
-                    "value": "admin"
-                },
-                {
-                    "name": "DB_PASSWORD",
-                    "value": "kosa1004"
-                }
-            ],
+            "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
