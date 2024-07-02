@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:457625770137:task-definition/rlatkdtasktest1:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:457625770137:task-definition/rlatkdtasktest1:12",
     "containerDefinitions": [
         {
             "name": "rlatkdcontainertest1",
