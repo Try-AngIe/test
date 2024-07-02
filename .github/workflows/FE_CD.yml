@@ -1,0 +1,60 @@
+name: FE CD
+
+on:
+  push:
+    branches:
+      - main #prod브랜치만
+
+env:
+  AWS_REGION: ap-northeast-2
+  S3_BUCKET_NAME: rlatkdbuckettest1
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 캐시 액션 설치
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('react/package-lock.json') }}
+      
+      # 캐싱 여부 출력
+      - if: steps.npm-cache.outputs.cache-hit == 'true'
+        run: echo 'npm cache hit!'
+      - if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: echo 'npm cache missed!'
+
+      # 캐시가 없거나 다른 경우에만 모듈 설치 -> 배포 시간 단축
+      - name: Install Dependencies
+        working-directory: react
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build Npm
+        working-directory: react
+        run: npm run build
+
+      - name: Remove template files
+        run: rm -rf node_modules public src index.html package*
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: upload to S3
+        run: aws s3 sync build/ s3://${{ env.S3_BUCKET_NAME }} --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
