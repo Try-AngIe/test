@@ -1,11 +1,8 @@
 name: BE CD
 
 on:
-  push:
-    branches:
-      - main
-    # paths:
-    #   - 's3-bucket-trigger-path/**'
+  repository_dispatch:
+    types: [trigger-cd]
 
 env:
   AWS_REGION: ap-northeast-2
