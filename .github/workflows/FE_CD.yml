@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main # prod 브랜치만
+    paths:
+      - 'react/**'  #FE만
 
 env:
   AWS_REGION: ap-northeast-2
