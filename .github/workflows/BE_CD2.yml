@@ -3,9 +3,9 @@ name: BE CD
 on:
   push:
     branches:
-      - main
+      - prod #prod브랜치만
     paths:
-      - 's3-bucket-trigger-path/**'
+      - 'demo/**'  #BE만
 
 env:
   AWS_REGION: ap-northeast-2
@@ -14,7 +14,6 @@ env:
   ECS_CLUSTER: rlatkdcluster2
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: rlatkdcontainer2
-  S3_BUCKET: your-s3-bucket-name
 
 permissions:
   contents: read
@@ -29,20 +28,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Replace AWS ID
+        run: |
+          sed -i "s/{AWS_ACCOUNT_ID}/${{ secrets.AWS_ACCOUNT_ID }}/g" ${{ env.ECS_TASK_DEFINITION }}
+
+      - name: JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant Permission
+        run: chmod +x demo/gradlew
+
+      - name: Build Gradle
+        run: |
+          cd demo
+          ./gradlew clean build -x test
+
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Download from S3
-        run: |
-          aws s3 cp s3://${{ env.S3_BUCKET }}/my-application-1.0.0.jar ./demo/build/libs/my-application-1.0.0.jar
-
-      - name: Replace AWS ID
-        run: |
-          sed -i "s/{AWS_ACCOUNT_ID}/${{ secrets.AWS_ACCOUNT_ID }}/g" ${{ env.ECS_TASK_DEFINITION }}
 
       - name: Login ECR
         id: login-ecr
