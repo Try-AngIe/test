@@ -3,7 +3,7 @@ name: BE CI
 on:
   push:
     branches:
-      - test11
+      - main
     paths:
       - 'demo/**'
 
