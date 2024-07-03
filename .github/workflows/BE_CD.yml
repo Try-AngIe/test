@@ -38,7 +38,7 @@ jobs:
 
       - name: Download from S3
         run: |
-          aws s3 cp s3://${{ env.S3_BUCKET }}/my-application-1.0.0.jar ./demo/build/libs/my-application-1.0.0.jar
+          aws s3 cp s3://${{ env.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar ./demo/build/libs/demo-0.0.1-SNAPSHOT.jar
 
       - name: Replace AWS ID
         run: |
