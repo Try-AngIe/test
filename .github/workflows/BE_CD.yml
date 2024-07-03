@@ -3,9 +3,9 @@ name: BE CD
 on:
   push:
     branches:
-      - main
+      - test
     paths:
-      - 's3-bucket-trigger-path/**'
+      - 'LOG/**'
 
 env:
   AWS_REGION: ap-northeast-2
