@@ -1,3 +1,8 @@
+[1]
+pip install requests -t python
+powershell Compress-Archive python requests.zip
+
+[2]
 import json
 import boto3
 import base64
