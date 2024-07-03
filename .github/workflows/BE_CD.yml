@@ -14,7 +14,7 @@ env:
   ECS_CLUSTER: rlatkdcluster2
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: rlatkdcontainer2
-  S3_BUCKET: your-s3-bucket-name
+  S3_BUCKET: rlatkdbe1
 
 permissions:
   contents: read
