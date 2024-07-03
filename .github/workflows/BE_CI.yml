@@ -36,6 +36,7 @@ jobs:
         run: |
           cd demo
           ./gradlew clean build -x test
+          ls build/libs
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -46,4 +47,4 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 cp demo/build/libs/demo-1.0-SNAPSHOT.jar s3://${{ env.S3_BUCKET }}/demo-1.0-SNAPSHOT.jar.jar
+          aws s3 cp demo/build/libs/demo-1.0.0-SNAPSHOT.jar s3://${{ env.S3_BUCKET }}/demo-1.0.0-SNAPSHOT.jar.jar
