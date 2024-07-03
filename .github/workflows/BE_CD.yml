@@ -1,7 +1,7 @@
 name: BE CD
 
 on:
-  repository_dispatch:  
+  repository_dispatch:
     types: [trigger-cd]
 
 env:
@@ -33,6 +33,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Trigger Lambda Function
+        run: |
+          aws lambda invoke --function-name lambda_handler --payload '{"Records":[{"s3":{"bucket":{"name":"rlatkdbe1"},"object":{"key":"demo-0.0.1-SNAPSHOT.jar"}}}]}' response.json
+          cat response.json
+
       - name: Download from S3
         run: |
           aws s3 cp s3://${{ env.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar ./demo/build/libs/demo-0.0.1-SNAPSHOT.jar
@@ -53,7 +58,7 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./demo
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Image ID to ECS TASK
         id: task-def
