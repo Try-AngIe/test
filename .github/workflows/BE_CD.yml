@@ -5,7 +5,7 @@ on:
     branches:
       - test
     paths:
-      - 'LOG/**'
+      - 'DEPLOY_LOG/**'
 
 env:
   AWS_REGION: ap-northeast-2
