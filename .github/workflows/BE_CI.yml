@@ -12,7 +12,9 @@ env:
   S3_BUCKET: rlatkdbe1
 
 permissions:
-  contents: read
+  contents: read, write
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -48,3 +50,34 @@ jobs:
       - name: Upload to S3
         run: |
           aws s3 cp demo/build/libs/demo-0.0.1-SNAPSHOT.jar s3://${{ env.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar
+
+  test-synchronize:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Main Branch
+      uses: actions/checkout@v2
+      with:
+        ref: main
+        fetch-depth: 0 #dev브랜치 모든 history 다 참조
+
+    - name: Set Up Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Fetch All Branches
+      run: git fetch origin #원격 상태 패치
+
+    - name: Checkout Test
+      run: git checkout -b test origin/test #원격 test브랜치 로컬에 매핑
+
+    - name: Merge Main Into Test
+      run: | #main브랜치 test브랜치에 merge
+        git merge main --strategy-option theirs
+
+    - name: Push Test
+      env:
+        GITHUB_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      run: | #test브랜치 push
+        git remote set-url origin https://${{ secrets.SYNC_TOKEN }}@github.com/Try-AngIe/cms-plus.git
+        git push origin test
