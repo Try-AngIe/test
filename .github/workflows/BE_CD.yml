@@ -3,7 +3,7 @@ name: BE CD
 on:
   push:
     branches:
-      - test
+      - main
     paths:
       - 's3-bucket-trigger-path/**'
 
