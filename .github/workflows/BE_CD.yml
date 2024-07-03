@@ -3,7 +3,7 @@ name: BE CD
 on:
   push:
     branches:
-      - test
+      - test2
     paths:
       - 'DEPLOY_LOG/**'
 
