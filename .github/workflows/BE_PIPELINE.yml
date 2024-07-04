@@ -12,6 +12,9 @@ permissions: #github actions bot에게 권한 열기
   pages: write
   id-token: write
 
+env:
+  AWS_REGION: ap-northeast-2
+
 jobs:
   build:
     runs-on: ubuntu-latest
