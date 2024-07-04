@@ -47,22 +47,26 @@ jobs:
         run: npm install
         working-directory: react
 
-      - name: Npm
+      - name: Npm Build
         run: npm run build
         working-directory: react
 
-      - name: Dist
+      - name: Copy
         run: |
-          mkdir -p dist
-          cp -r react/dist/* dist/
+          mkdir -p fe
+          cp -r react/dist/* fe/
 
-      - name: Build
+      - name: Git Config
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Git Operations
+        run: |
+          timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           git fetch origin
           git checkout prod || git checkout -b prod
-          cp -r dist/* .
-          git add dist
-          git commit -m "Add build artifacts"
+          cp -r fe/* .
+          git add fe
+          git commit -m "release: $timestamp FE 배포 완료"
           git push origin prod --force

@@ -24,7 +24,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          timestamp=$(date +"%Y-%m-%d_%H-%M-%S")  # 파일명에 사용할 타임스탬프 형식 변경
+          timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           log_file="DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
           mkdir -p DEPLOY_LOG/client
           echo "프론트엔드 배포 로그" > "$log_file"

@@ -12,8 +12,11 @@ env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET: rlatkdbe3
 
-permissions:
-  contents: read
+permissions: #github actions bot에게 권한 열기
+  contents: write
+  pages: write
+  id-token: write
+
 
 jobs:
   build:
@@ -33,19 +36,27 @@ jobs:
       - name: Grant Permission
         run: chmod +x demo/gradlew
 
-      - name: Build Gradle
+      - name: Gradle Build
         run: |
           cd demo
           ./gradlew clean build -x test
-          ls build/libs
 
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Upload to S3
+      - name: Copy
         run: |
-          aws s3 cp demo/build/libs/demo-0.0.1-SNAPSHOT.jar s3://${{ env.S3_BUCKET }}/demo-0.0.1-SNAPSHOT.jar
+          mkdir -p be
+          cp -r demo/build/libs/*.jar be/   
+
+      - name: Git Config
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Build
+        run: |
+          timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+          git fetch origin
+          git checkout prod || git checkout -b prod
+          cp -r be/* .
+          git add be
+          git commit -m "release: $timestamp BE 배포 완료"
+          git push origin prod --force
