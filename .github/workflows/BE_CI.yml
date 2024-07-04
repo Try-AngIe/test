@@ -9,9 +9,12 @@ on:
       - 'demo/**'
 
 permissions: #github actions bot에게 권한 열기
-  contents: write
   pages: write
   id-token: write
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
 
 
 jobs:
