@@ -20,7 +20,7 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-        return "test t01";
+        return "test t02";
     }
 
     @PostMapping("/users")
