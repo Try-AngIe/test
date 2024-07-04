@@ -9,7 +9,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: rlatkdfe3 
+  S3_BUCKET_NAME: rlatkdfe3
 
 jobs:
   build:
