@@ -33,21 +33,28 @@ jobs:
       - name: Grant Permission
         run: chmod +x demo/gradlew
 
-      - name: Gradle Build
-        run: |
-          cd demo
-          ./gradlew clean build -x test
-
       - name: Test with Gradle # test application build
         run: |
           cd demo
           ./gradlew test
+        if: success()  # Only run if previous steps were successful
 
       - name: Publish Unit Test Results # test 후 result를 보기 위해 추가
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ always() }} # test가 실패해도 report를 남기기 위해 설정
         with:
           files: demo/build/test-results/**/*.xml
+        
+
+        
+
+
+      - name: Gradle Build
+        run: |
+          cd demo
+          ./gradlew clean build -x test
+
+
 
       - name: Copy
         run: |
