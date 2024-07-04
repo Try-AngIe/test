@@ -2,7 +2,7 @@ name: FE CD
 
 on:
   workflow_run:
-    workflows: ["FE PIPELINE"]
+    workflows: [ "FE PIPELINE" ]
     types:
       - completed
 
