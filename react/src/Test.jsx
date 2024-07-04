@@ -7,7 +7,7 @@ const Test = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get('rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/test')
+        axios.get('http://rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/test')
             .then(res => {
                 console.log(res.data);
             })
@@ -18,7 +18,7 @@ const Test = () => {
     }, []);
 
     const getUser = () => {
-        axios.get('rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/users')
+        axios.get('http://rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/users')
             .then(res => {
                 setUsers(res.data);
             })
@@ -29,7 +29,7 @@ const Test = () => {
 
     const createUser = () => {
         const user = { name: 'John Doe', email: 'john.doe@example.com' };
-        axios.post('rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/users', user)
+        axios.post('http://rlatkdalb5-297310800.ap-northeast-2.elb.amazonaws.com/users', user)
             .then(res => {
                 console.log('[유저 생성]', res.data);
                 getUser();
