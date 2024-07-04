@@ -9,10 +9,10 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REPOSITORY: rlatkdecr3
+  ECR_REPOSITORY: rlatkdecr4
   ECS_CLUSTER: rlatkdcluster3
-  ECS_CONTAINER: rlatkdcontainer3
-  ECS_SERVICE: rlatkdservice3
+  ECS_CONTAINER: rlatkdcontainer4
+  ECS_SERVICE: rlatkdservice4
 
   ECS_TASK_DEFINITION: task-definition.json
 
