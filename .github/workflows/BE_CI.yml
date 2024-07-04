@@ -16,7 +16,6 @@ permissions: #github actions bot에게 권한 열기
 
 jobs:
   be-ci:
-    name: Build
     runs-on: ubuntu-latest
 
     steps:
