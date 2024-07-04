@@ -1,9 +1,10 @@
 name: FE CD
 
 on:
-  push:
-    branches:
-      - prod # prod 브랜치만
+  workflow_run:
+    workflows: ["FE PIPELINE"]
+    types:
+      - completed
 
 env:
   AWS_REGION: ap-northeast-2
