@@ -6,6 +6,11 @@ on:
     types:
       - completed
 
+permissions: #github actions bot에게 권한 열기
+  contents: write
+  pages: write
+  id-token: write
+
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: rlatkdfe3
@@ -22,7 +27,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: react-build
-          path: react/dist
 
       - name: Upload to S3
         run: |
