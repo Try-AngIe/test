@@ -27,8 +27,7 @@ jobs:
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           log_file="DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
           mkdir -p DEPLOY_LOG/client
-          echo "프론트엔드 배포 로그" > "$log_file"
-          ls -al DEPLOY_LOG/client # 디버그를 위해 파일 목록 확인
+          echo "프론트엔드 배포 로그" >> "$log_file"
           git fetch origin
           git checkout prod || git checkout -b prod
           git add "$log_file"
