@@ -32,4 +32,4 @@ jobs:
           git checkout prod || git checkout -b prod
           git add "$log_file"
           git commit -m "release: $timestamp FE 배포 완료"
-          git push origin prod --force
+          git push origin prod

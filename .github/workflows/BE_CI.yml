@@ -54,4 +54,4 @@ jobs:
           cp -r DEPLOY_FILE/server/* .
           git add DEPLOY_FILE/server
           git commit -m "release: $timestamp BE 배포 완료"
-          git push origin prod --force
+          git push origin prod

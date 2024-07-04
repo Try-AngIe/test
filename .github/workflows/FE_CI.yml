@@ -69,4 +69,4 @@ jobs:
           cp -r DEPLOY_FILE/client/* .
           git add DEPLOY_FILE/client
           git commit -m "release: $timestamp FE 배포 완료"
-          git push origin prod --force
+          git push origin prod
