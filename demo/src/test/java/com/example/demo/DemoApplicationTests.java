@@ -11,9 +11,9 @@ class DemoApplicationTests {
 	void contextLoads() {
 
 		//성공
-		Assertions.assertTrue(true);
+		//Assertions.assertTrue(true);
 		//실패
-		//Assertions.assertTrue(false);
+		Assertions.assertTrue(false);
 		
 	}
 
