@@ -31,6 +31,7 @@ jobs:
           ls -al DEPLOY_LOG/client # 디버그를 위해 파일 목록 확인
           git fetch origin
           git checkout prod || git checkout -b prod
+          git rebase origin/prod
           git add "$log_file"
           git commit -m "release: $timestamp FE 배포 완료"
-          git push origin prod
+          git push origin prod --force
