@@ -7,7 +7,6 @@ on:
 
 jobs:
   dev-trigger:
-    name: Transition Issue
     runs-on: ubuntu-latest
     steps:
     - name: Login

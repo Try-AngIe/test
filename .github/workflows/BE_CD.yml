@@ -22,7 +22,6 @@ permissions:
 
 jobs:
   be-cd:
-    name: Deploy
     runs-on: ubuntu-latest
     environment: production
 
