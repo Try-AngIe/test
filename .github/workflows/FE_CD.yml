@@ -5,7 +5,7 @@ on:
     branches:
       - prod # prod 브랜치만
     paths:
-      - 'react/**'  #FE만
+      - 'DEPLOY_LOG/**'
 
 env:
   AWS_REGION: ap-northeast-2
