@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - prod # prod 브랜치만
-    paths:
-      - 'DEPLOY_LOG/**'
 
 env:
   AWS_REGION: ap-northeast-2
