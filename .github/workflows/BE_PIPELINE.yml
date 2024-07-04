@@ -17,7 +17,7 @@ env:
   S3_BUCKET: rlatkdbe3
 
 jobs:
-  build:
+  be-pipline:
     runs-on: ubuntu-latest
 
     steps:

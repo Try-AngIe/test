@@ -16,7 +16,7 @@ env:
   S3_BUCKET_NAME: rlatkdfe3
 
 jobs:
-  build:
+  fe-cd:
     runs-on: ubuntu-latest
 
     steps:
