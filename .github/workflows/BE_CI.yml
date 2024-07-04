@@ -8,10 +8,6 @@ on:
     paths:
       - 'demo/**'
 
-env:
-  AWS_REGION: ap-northeast-2
-  S3_BUCKET: rlatkdbe3
-
 permissions: #github actions bot에게 권한 열기
   contents: write
   pages: write
