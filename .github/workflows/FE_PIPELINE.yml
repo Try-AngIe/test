@@ -7,7 +7,7 @@ on:
     paths:
       - 'react/**'
 
-permissions:
+permissions: #github actions bot에게 권한 열기
   contents: write
   pages: write
   id-token: write
@@ -25,13 +25,14 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+          timestamp=$(date +"%Y-%m-%d_%H-%M-%S")  # 파일명에 사용할 타임스탬프 형식 변경
+          log_file="DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
           mkdir -p DEPLOY_LOG/client
-          echo "프론트엔드 배포 로그" > "DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
+          echo "프론트엔드 배포 로그" > "$log_file"
           ls -al DEPLOY_LOG/client # 디버그를 위해 파일 목록 확인
           git fetch origin
           git checkout prod || git checkout -b prod
           git pull origin prod
-          git add DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log
+          git add "$log_file"
           git commit -m "release: $timestamp FE 배포 완료"
           git push origin prod
