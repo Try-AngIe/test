@@ -1,11 +1,10 @@
 name: BE CD
 
 on:
-  push:
-    branches:
-      - prod
-    paths:
-      - 'DEPLOY_LOG/**'
+  workflow_run:
+    workflows: [ "BE PIPELINE" ]
+    types:
+      - completed
 
 env:
   AWS_REGION: ap-northeast-2
