@@ -13,7 +13,6 @@ permissions: #github actions bot에게 권한 열기
   pages: write
   id-token: write
 
-
 jobs:
   be-ci:
     runs-on: ubuntu-latest
@@ -31,22 +30,49 @@ jobs:
       - name: Grant Permission
         run: chmod +x demo/gradlew
 
+      # Gradle test 실행
+      - name: Test with Gradle
+        id: gradle-test
+        run: |
+          cd demo
+          ./gradlew --info test
+        continue-on-error: true
+      
+      # 테스트 결과 확인
+      - name: Check Test Results
+        if: steps.gradle-test.outcome == 'success'
+        run: echo "Tests passed, proceeding with build and deployment."
+      
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: steps.gradle-test.outcome == 'success'
+        with:
+          files: demo/build/test-results/**/*.xml
+
+      # Gradle Build
       - name: Gradle Build
+        if: steps.gradle-test.outcome == 'success'
         run: |
           cd demo
           ./gradlew clean build -x test
 
+      # Copy files for deployment
       - name: Copy
+        if: steps.gradle-test.outcome == 'success'
         run: |
           mkdir -p DEPLOY_FILE/server
           cp -r demo/build/libs/*.jar DEPLOY_FILE/server/
 
+      # Git configuration
       - name: Git Config
+        if: steps.gradle-test.outcome == 'success'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Build
+      # Git commit and push
+      - name: Build and Deploy
+        if: steps.gradle-test.outcome == 'success'
         run: |
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           cp -r DEPLOY_FILE/server/* .
