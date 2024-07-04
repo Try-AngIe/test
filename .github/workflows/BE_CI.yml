@@ -40,13 +40,14 @@ jobs:
           ./gradlew clean build -x test
 
       - name: Test with Gradle # test application build
+          cd demo
         run: ./gradlew test
 
       - name: Publish Unit Test Results # test 후 result를 보기 위해 추가
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ always() }} # test가 실패해도 report를 남기기 위해 설정
         with:
-          files: build/test-results/**/*.xml
+          files: demo/build/test-results/**/*.xml
 
       - name: Copy
         run: |
