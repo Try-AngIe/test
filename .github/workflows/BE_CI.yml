@@ -9,9 +9,13 @@ on:
       - 'demo/**'
 
 permissions: #github actions bot에게 권한 열기
-  contents: write
   pages: write
   id-token: write
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
 
 jobs:
   be-ci:
@@ -36,8 +40,9 @@ jobs:
           ./gradlew clean build -x test
 
       - name: Test with Gradle # test application build
+        run: |
           cd demo
-        run: ./gradlew test
+          ./gradlew test
 
       - name: Publish Unit Test Results # test 후 result를 보기 위해 추가
         uses: EnricoMi/publish-unit-test-result-action@v1
