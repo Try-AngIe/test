@@ -41,7 +41,7 @@ const Test = () => {
 
     return (
         <>
-            <h1>API 체크 t14</h1>
+            <h1>API 체크 t01</h1>
             <button onClick={createUser}>테스트 유저 생성</button>
             <button onClick={getUser}>테스트 유저 조회</button>
             <h2>Users List</h2>
