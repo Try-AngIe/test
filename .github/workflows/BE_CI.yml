@@ -11,11 +11,10 @@ on:
 permissions: #github actions bot에게 권한 열기
   pages: write
   id-token: write
-  contents: read
+  contents: write
   issues: read
   checks: write
   pull-requests: write
-
 
 jobs:
   be-ci:
