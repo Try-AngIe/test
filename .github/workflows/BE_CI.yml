@@ -41,7 +41,6 @@ jobs:
         run: |
           mkdir -p DEPLOY_FILE/server
           cp -r demo/build/libs/*.jar DEPLOY_FILE/server/
-          ls -lR DEPLOY_FILE/server  # DEPLOY_FILE/server 디렉토리 내의 파일 목록 출력
 
       - name: Git Config
         run: |
