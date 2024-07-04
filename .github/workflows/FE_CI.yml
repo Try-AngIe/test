@@ -64,9 +64,9 @@ jobs:
       - name: Git Operations
         run: |
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+          cp -r DEPLOY_FILE/client/* .
           git fetch origin
           git checkout prod || git checkout -b prod
-          cp -r DEPLOY_FILE/client/* .
           git add DEPLOY_FILE/client
           git commit -m "release: $timestamp FE 배포 완료"
           git push origin prod --force

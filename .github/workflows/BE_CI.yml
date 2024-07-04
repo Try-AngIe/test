@@ -49,9 +49,9 @@ jobs:
       - name: Build
         run: |
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+          cp -r DEPLOY_FILE/server/* .
           git fetch origin
           git checkout prod || git checkout -b prod
-          cp -r DEPLOY_FILE/server/* .
           git add DEPLOY_FILE/server
           git commit -m "release: $timestamp BE 배포 완료"
           git push origin prod --force

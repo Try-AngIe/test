@@ -27,12 +27,13 @@ jobs:
 
       - name: LOG
         run: |
-          git fetch origin
-          git checkout prod || git checkout -b prod
+
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           log_file="DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
           mkdir -p DEPLOY_LOG/client
           echo "프론트엔드 배포 로그" >> "$log_file"
+          git fetch origin
+          git checkout prod || git checkout -b prod
           git add "$log_file"
           git commit -m "release: $timestamp FE 배포 완료"
           git push origin prod --force
