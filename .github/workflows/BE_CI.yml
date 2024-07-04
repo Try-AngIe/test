@@ -36,7 +36,7 @@ jobs:
       - name: Test with Gradle # test application build
         run: |
           cd demo
-          ./gradlew test
+          ./gradlew build
         if: success()  # Only run if previous steps were successful
 
       - name: Publish Unit Test Results # test 후 result를 보기 위해 추가
@@ -49,10 +49,10 @@ jobs:
         
 
 
-      - name: Gradle Build
-        run: |
-          cd demo
-          ./gradlew clean build -x test
+      # - name: Gradle Build
+      #   run: |
+      #     cd demo
+      #     ./gradlew clean build -x test
 
 
 
