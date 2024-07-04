@@ -67,17 +67,17 @@ jobs:
           git commit -m "Add build artifacts"
           git push origin prod --force
 
-      - name: Health Check
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const context = github.context;
-            await github.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'success',
-              context: 'FE CI',
-              description: 'FE CI completed',
-              target_url: context.run.html_url
-            });
+      # - name: Health Check
+      #   uses: actions/github-script@v5
+      #   with:
+      #     script: |
+      #       const context = github.context;
+      #       await github.repos.createCommitStatus({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         sha: context.sha,
+      #         state: 'success',
+      #         context: 'FE CI',
+      #         description: 'FE CI completed',
+      #         target_url: context.run.html_url
+      #       });
