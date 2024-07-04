@@ -53,8 +53,8 @@ jobs:
 
       - name: Copy
         run: |
-          mkdir -p fe
-          cp -r react/dist/* fe/
+          mkdir -p DEPLOY_FILE/client
+          cp -r react/dist/* DEPLOY_FILE/client/
 
       - name: Git Config
         run: |
@@ -66,7 +66,7 @@ jobs:
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           git fetch origin
           git checkout prod || git checkout -b prod
-          cp -r fe/* .
-          git add fe
+          cp -r DEPLOY_FILE/client/* .
+          git add DEPLOY_FILE/client
           git commit -m "release: $timestamp FE 배포 완료"
           git push origin prod --force
