@@ -51,8 +51,13 @@ jobs:
         run: npm run build
         working-directory: react
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: react-build
-          path: react/dist
+      - name: Commit build artifacts
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin
+          git checkout prod || git checkout -b prod
+          cp -r react/dist/* .
+          git add .
+          git commit -m "Add build artifacts"
+          git push origin prod --force

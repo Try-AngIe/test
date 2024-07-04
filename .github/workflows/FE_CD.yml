@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: prod
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
