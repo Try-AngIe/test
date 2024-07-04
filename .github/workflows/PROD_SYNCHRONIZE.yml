@@ -3,7 +3,7 @@ name: Prod Synchronize
 on:
   push:
     branches:
-      - dev #dev브랜치->prod브랜치
+      - test #dev브랜치->prod브랜치
 
 permissions: #github actions bot에게 권한 열기
   contents: write

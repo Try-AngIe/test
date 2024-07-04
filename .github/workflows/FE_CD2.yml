@@ -1,0 +1,53 @@
+name: FE CD
+
+on:
+  push:
+    branches:
+      - test # prod 브랜치만
+    paths:
+      - 'react/**'  #FE만
+
+env:
+  AWS_REGION: ap-northeast-2
+  S3_BUCKET_NAME: rlatkdbuckettest1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 캐시 액션 설치
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('react/package-lock.json') }}
+      
+      # 캐시 여부 출력
+      - name: Print cache status
+        run: |
+          if [ -e ~/.npm ]; then
+            echo "npm cache hit!"
+          else
+            echo "npm cache missed!"
+          fi
+
+      # 캐시가 없거나 다른 경우에만 모듈 설치 -> 배포 시간 단축
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+        working-directory: react
+
+      - name: Build Npm
+        run: npm run build
+        working-directory: react
+      
+      - name: Upload to S3
+        run: |
+          aws s3 sync react/dist/ s3://${{ env.S3_BUCKET_NAME }} --delete --acl public-read
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

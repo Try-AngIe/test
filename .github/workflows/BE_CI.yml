@@ -1,15 +1,16 @@
 name: BE CI
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - dev
+    types: [ opened ]
     paths:
       - 'demo/**'
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET: rlatkdbe1
+  S3_BUCKET: rlatkdbe3
 
 permissions:
   contents: read

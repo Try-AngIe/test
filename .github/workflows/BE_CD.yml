@@ -3,18 +3,20 @@ name: BE CD
 on:
   push:
     branches:
-      - main
+      - prod
     paths:
       - 'DEPLOY_LOG/**'
 
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REPOSITORY: rlatkdecr2
-  ECS_SERVICE: rlatkdservice2
-  ECS_CLUSTER: rlatkdcluster2
+  ECR_REPOSITORY: rlatkdecr3
+  ECS_CLUSTER: rlatkdcluster3
+  ECS_CONTAINER: rlatkdcontainer3
+  ECS_SERVICE: rlatkdservice3
+
   ECS_TASK_DEFINITION: task-definition.json
-  CONTAINER_NAME: rlatkdcontainer2
-  S3_BUCKET: rlatkdbe1
+
+  S3_BUCKET: rlatkdbe3
 
 permissions:
   contents: read
@@ -63,7 +65,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
+          container-name: ${{ env.ECS_CONTAINER }}
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy ECS
