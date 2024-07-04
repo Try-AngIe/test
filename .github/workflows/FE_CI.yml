@@ -51,13 +51,19 @@ jobs:
         run: npm run build
         working-directory: react
 
+      - name: Dist
+        run: |
+          mkdir -p dist
+          cp -r react/dist/* dist/
+
       - name: Commit build artifacts
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git fetch origin
           git checkout prod || git checkout -b prod
-          cp -r react/dist/* .
-          git add .
+          cp -r dist/* .
+          git add dist
           git commit -m "Add build artifacts"
           git push origin prod --force
+          
