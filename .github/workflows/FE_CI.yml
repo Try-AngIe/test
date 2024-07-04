@@ -66,7 +66,6 @@ jobs:
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           git fetch origin
           git checkout prod || git checkout -b prod
-          git pull --rebase origin prod
           cp -r DEPLOY_FILE/client/* .
           git add DEPLOY_FILE/client
           git commit -m "release: $timestamp FE 배포 완료"

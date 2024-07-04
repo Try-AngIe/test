@@ -29,7 +29,6 @@ jobs:
         run: |
           git fetch origin
           git checkout prod || git checkout -b prod
-          git pull --rebase origin prod
           timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
           log_file="DEPLOY_LOG/client/FE_CD_LOG-$timestamp.log"
           mkdir -p DEPLOY_LOG/client
